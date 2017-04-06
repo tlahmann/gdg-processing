@@ -31,13 +31,10 @@ public class Equalizer extends PApplet {
 
         // Creates random circles to see what an animation could look like
         for (int i = 0; i < 10; i++) {
-            float xPosition = random(this.width);
-            float yPosition = random(this.height);
-            PVector position = new PVector(xPosition, yPosition);
+            PVector position = new PVector(random(this.width), random(this.height));
             float radius = random(10, 100);
             int color = color(0, 128, 128);
-            Circle c = new Circle(position, radius, color);
-            circles.add(c);
+            circles.add(new Circle(this, position, radius, color));
         }
     }
 
@@ -47,8 +44,7 @@ public class Equalizer extends PApplet {
     public void draw() {
         // Display every circle available
         for (Circle c : circles) {
-            stroke(c.color);
-            ellipse(c.position.x, c.position.y, c.radius, c.radius);
+            c.display();
         }
     }
 
