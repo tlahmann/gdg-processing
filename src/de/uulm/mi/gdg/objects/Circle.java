@@ -16,7 +16,9 @@ public class Circle {
     private float speed;
 
     /**
-     * Constructor for the Circle. Creates a PShape.
+     * Constructor for the Arc (Circle). Takes the parent (canvas) to draw on. Constructs random values for the diameter of the
+     * self, the rotation. All arcs have a fixed position of being centered on the canvas. The arc gets
+     * a randomly assigned direction as well as random speed to bring some excitement to the animation.
      *
      * @param papa     The PApplet to draw on
      * @param position The position of the circle
