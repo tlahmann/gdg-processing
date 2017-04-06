@@ -21,13 +21,15 @@ public class Circle {
      * @param radius   The radius of the circle
      * @param color    The color of the circles stroke
      */
-    public Circle(PApplet papa, PVector position, float radius, int color) {
+    public Circle(PApplet papa, PVector position, float radius, float weight, int color) {
         canvas = papa;
         this.position = position;
 
         // Shapes bring the advantage of being easily modifiable and adjustable
         shape = canvas.createShape(PConstants.ELLIPSE, 0, 0, radius, radius);
         shape.setStroke(color);
+        shape.setStrokeWeight(weight);
+        shape.setFill(false);
     }
 
     /**
