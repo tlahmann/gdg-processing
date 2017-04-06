@@ -48,6 +48,7 @@ public class Equalizer extends PApplet {
 
         // Display every circle available
         for (Circle c : circles) {
+            c.update();
             c.display();
         }
     }

@@ -57,8 +57,6 @@ public class Circle {
      * Displays the shape on the stored static canvas object.
      */
     public void display() {
-        this.angle = (this.angle + this.speed) % PApplet.TWO_PI;
-
         canvas.pushMatrix();
 
         canvas.translate(position.x, position.y);
@@ -66,5 +64,13 @@ public class Circle {
         canvas.shape(shape);
 
         canvas.popMatrix();
+    }
+
+    /**
+     * Recalculates the angle of rotation depending on the direction of rotation and the speed (combined in speed) at
+     * which the arc should be rotated.
+     */
+    public void update() {
+        this.angle = (this.angle + this.speed) % PApplet.TWO_PI;
     }
 }
