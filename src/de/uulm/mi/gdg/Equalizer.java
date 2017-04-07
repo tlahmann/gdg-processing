@@ -54,6 +54,9 @@ public class Equalizer extends PApplet {
 
         spectra = new ArrayList<>();
         for (int i = 1; i < 7; i++) {
+            float radius = i * 50;
+            float weight = 2;
+            int color = color(0, 128, 64, 100);
             int side = i % 2 == 0 ? 1 : -1;
             PVector orientation = new PVector(side * PConstants.HALF_PI, side);
             spectra.add(new Spectrum(this, position, radius, weight, color, fft.specSize(), orientation));
