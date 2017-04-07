@@ -8,7 +8,7 @@ import processing.core.PVector;
 /**
  * @author Tobias Lahmann
  */
-public class Circle {
+public class Circle implements Entity {
     private static PApplet canvas;
     private PShape shape;
     private PVector position;
@@ -71,6 +71,10 @@ public class Circle {
         canvas.popMatrix();
     }
 
+    public void update() {
+        this.angle = (this.angle + this.speed) % PApplet.TWO_PI;
+    }
+
     /**
      * Recalculates the angle of rotation depending on the direction of rotation and the speed (combined in speed) at
      * which the arc should be rotated.
@@ -80,7 +84,6 @@ public class Circle {
      */
     public void update(float jitter) {
         this.jitter = jitter / 2;
-
-        this.angle = (this.angle + this.speed) % PApplet.TWO_PI;
+        update();
     }
 }
