@@ -55,7 +55,8 @@ public class Equalizer extends PApplet {
         spectra = new ArrayList<>();
         for (int i = 1; i < 7; i++) {
             int side = i % 2 == 0 ? 1 : -1;
-            spectra.add(new Spectrum(this, fft.specSize(), position, i * 50, new PVector(side * PConstants.HALF_PI, side)));
+            PVector orientation = new PVector(side * PConstants.HALF_PI, side);
+            spectra.add(new Spectrum(this, position, radius, weight, color, fft.specSize(), orientation));
         }
 
         // Start the song right away

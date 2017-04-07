@@ -25,7 +25,7 @@ public class Spectrum implements Entity {
      * @param radius      Radius of the arc
      * @param orientation PVector containing two components: the rotation and the orientation of the arc
      */
-    public Spectrum(PApplet papa, int bands, PVector position, float radius, PVector orientation) {
+    public Spectrum(PApplet papa, PVector position, float radius, float weight, int color, int bands, PVector orientation) {
         canvas = papa;
         this.bands = bands;
         this.position = position;
@@ -35,8 +35,8 @@ public class Spectrum implements Entity {
         shape = canvas.createShape();
         shape.beginShape();
 
-        shape.stroke(0, 128, 64, 100);
-        shape.strokeWeight(2);
+        shape.stroke(color);
+        shape.strokeWeight(weight);
         shape.noFill();
 
         shape.rotate(orientation.x);
