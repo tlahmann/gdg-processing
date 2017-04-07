@@ -14,6 +14,8 @@ public class Circle {
     private PVector position;
     private float angle;
     private float speed;
+    private float weight;
+    private float jitter;
 
     /**
      * Constructor for the Arc (Circle). Takes the parent (canvas) to draw on. Constructs random values for the diameter
@@ -28,13 +30,13 @@ public class Circle {
     public Circle(PApplet papa, PVector position, float radius, float weight, int color) {
         canvas = papa;
         this.position = position;
+        this.weight = weight;
 
         // Shapes bring the advantage of being easily modifiable and adjustable
         shape = canvas.createShape();
         shape.beginShape();
 
         shape.stroke(color);
-        shape.strokeWeight(weight);
         shape.noFill();
 
         // The arc itself. The span variable sets the dimension of the arc to a random value starting from quarter pi
@@ -59,6 +61,9 @@ public class Circle {
     public void display() {
         canvas.pushMatrix();
 
+        // update the stroke weight
+        shape.setStrokeWeight(weight + jitter);
+
         canvas.translate(position.x, position.y);
         canvas.rotate(angle);
         canvas.shape(shape);
@@ -69,8 +74,13 @@ public class Circle {
     /**
      * Recalculates the angle of rotation depending on the direction of rotation and the speed (combined in speed) at
      * which the arc should be rotated.
+     * Resets the jitter according to the jitter value recieved.
+     *
+     * @param jitter Value of change applied to the stroke width
      */
-    public void update() {
+    public void update(float jitter) {
+        this.jitter = jitter / 2;
+
         this.angle = (this.angle + this.speed) % PApplet.TWO_PI;
     }
 }
