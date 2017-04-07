@@ -1,8 +1,7 @@
 package de.uulm.mi.gdg;
 
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
 import ddf.minim.analysis.FFT;
+import de.uulm.mi.gdg.controller.Player;
 import de.uulm.mi.gdg.objects.Circle;
 import de.uulm.mi.gdg.objects.Spectrum;
 import processing.core.PApplet;
@@ -21,8 +20,8 @@ public class Equalizer extends PApplet {
     private ArrayList<Circle> circles;
     private ArrayList<Spectrum> spectra;
 
-    private AudioPlayer song;
-    private FFT fft;
+    private static Player player;
+    private static FFT fft;
 
     /**
      * The settings() method runs before the sketch has been set up, so other Processing functions cannot be used at
@@ -48,9 +47,8 @@ public class Equalizer extends PApplet {
             circles.add(new Circle(this, position, radius, weight, color));
         }
 
-        Minim minim = new Minim(this);
-        song = minim.loadFile("./data/Kontinuum - First Rain.mp3");
-        fft = new FFT(song.bufferSize(), song.sampleRate());
+        player = new Player(this, "./data/Kontinuum - First Rain.mp3");
+        fft = player.getFFT();
 
         spectra = new ArrayList<>();
         for (int i = 1; i < 7; i++) {
@@ -61,9 +59,6 @@ public class Equalizer extends PApplet {
             PVector orientation = new PVector(side * PConstants.HALF_PI, side);
             spectra.add(new Spectrum(this, position, radius, weight, color, fft.specSize(), orientation));
         }
-
-        // Start the song right away
-        song.play();
     }
 
     /**
@@ -72,8 +67,8 @@ public class Equalizer extends PApplet {
     public void draw() {
         background(0);
 
-        fft.forward(song.mix);
-        // Add a jitter variable from fft of the song to the objects
+        fft.forward(player.getSong().mix);
+        // Add a jitter variable from fft of the player to the objects
         float jitter = fft.getBand(1);
         // Display every circle available
         for (Circle c : circles) {
@@ -85,14 +80,14 @@ public class Equalizer extends PApplet {
         float val;
         for (int i = 0; i < fft.specSize(); i++) {
             // update the left spectral arcs
-            val = song.left.get(i);
-            for (int j = 1; j < spectra.size(); j+=2) {
+            val = player.getSong().left.get(i);
+            for (int j = 1; j < spectra.size(); j += 2) {
                 spectra.get(j).update(i, val * 40);
             }
 
             // update the right spectral arcs
-            val = song.right.get(i);
-            for (int j = 0; j < spectra.size(); j+=2) {
+            val = player.getSong().right.get(i);
+            for (int j = 0; j < spectra.size(); j += 2) {
                 spectra.get(j).update(i, val * 40);
             }
         }
@@ -100,6 +95,12 @@ public class Equalizer extends PApplet {
         // display every spectrum available
         for (Spectrum s : spectra) {
             s.display();
+        }
+    }
+
+    public void keyPressed() {
+        if (key == 'P' || key == 'p') {
+            player.TogglePlaying();
         }
     }
 
