@@ -4,7 +4,9 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import ddf.minim.analysis.FFT;
 import de.uulm.mi.gdg.objects.Circle;
+import de.uulm.mi.gdg.objects.Spectrum;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 public class Equalizer extends PApplet {
     // A list of circles to hold the elements to display.
     private ArrayList<Circle> circles;
-    private AudioPlayer player;
+    private ArrayList<Spectrum> spectra;
+
+    private AudioPlayer song;
     private FFT fft;
 
     /**
@@ -34,9 +38,9 @@ public class Equalizer extends PApplet {
     public void setup() {
         circles = new ArrayList<>();
 
+        PVector position = new PVector(this.width / 2, this.height / 2);
         // Creates random circles to see what an animation could look like
         for (int i = 0; i < 10; i++) {
-            PVector position = new PVector(this.width / 2, this.height / 2);
             float radius = random(10, this.width);
             float weight = random(10, 50);
             float alpha = random(50, 60);
@@ -45,11 +49,17 @@ public class Equalizer extends PApplet {
         }
 
         Minim minim = new Minim(this);
-        player = minim.loadFile("./data/Kontinuum - First Rain.mp3");
-        fft = new FFT(player.bufferSize(), player.sampleRate());
+        song = minim.loadFile("./data/Kontinuum - First Rain.mp3");
+        fft = new FFT(song.bufferSize(), song.sampleRate());
+
+        spectra = new ArrayList<>();
+        for (int i = 1; i < 7; i++) {
+            int side = i % 2 == 0 ? 1 : -1;
+            spectra.add(new Spectrum(this, fft.specSize(), position, i * 50, new PVector(side * PConstants.HALF_PI, side)));
+        }
 
         // Start the song right away
-        player.play();
+        song.play();
     }
 
     /**
@@ -58,13 +68,34 @@ public class Equalizer extends PApplet {
     public void draw() {
         background(0);
 
-        fft.forward(player.mix);
+        fft.forward(song.mix);
         // Add a jitter variable from fft of the song to the objects
-        float jitter = fft.getBand(0);
+        float jitter = fft.getBand(1);
         // Display every circle available
         for (Circle c : circles) {
             c.update(jitter);
             c.display();
+        }
+
+        // update every spectral arc
+        float val;
+        for (int i = 0; i < fft.specSize(); i++) {
+            // update the left spectral arcs
+            val = song.left.get(i);
+            for (int j = 1; j < spectra.size(); j+=2) {
+                spectra.get(j).update(i, val * 40);
+            }
+
+            // update the right spectral arcs
+            val = song.right.get(i);
+            for (int j = 0; j < spectra.size(); j+=2) {
+                spectra.get(j).update(i, val * 40);
+            }
+        }
+
+        // display every spectrum available
+        for (Spectrum s : spectra) {
+            s.display();
         }
     }
 
