@@ -29,8 +29,8 @@ public class Blinker implements Entity {
     public void startAnimation() {
         anis = new ArrayList<>();
 
-        anis.add(new CustomAnimation(16.677f, 2.760f, "background", 90));
-        anis.add(new CustomAnimation(19.522f, 0.444f, "background", 0));
+        anis.add(new CustomAnimation(16.677f, 2.760f, "background", 90, AniConstants.CUBIC_IN));
+        anis.add(new CustomAnimation(19.522f, 0.444f, "background", 0, AniConstants.CUBIC_OUT));
     }
 
     /**
@@ -40,7 +40,7 @@ public class Blinker implements Entity {
         if (ani == null) {
             return;
         }
-        Ani.to(aniObject, ani.duration, ani.params, ani.value, AniConstants.CUBIC_IN);
+        Ani.to(aniObject, ani.duration, ani.params, ani.value, ani.mode);
         ani = null;
 
     }
