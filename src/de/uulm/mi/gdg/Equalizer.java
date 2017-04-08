@@ -1,6 +1,8 @@
 package de.uulm.mi.gdg;
 
 import ddf.minim.analysis.FFT;
+import de.looksgood.ani.Ani;
+import de.uulm.mi.gdg.controller.Blinker;
 import de.uulm.mi.gdg.controller.Player;
 import de.uulm.mi.gdg.objects.Circle;
 import de.uulm.mi.gdg.objects.Spectrum;
@@ -19,9 +21,12 @@ public class Equalizer extends PApplet {
     // A list of circles to hold the elements to display.
     private ArrayList<Circle> circles;
     private ArrayList<Spectrum> spectra;
+    private Blinker blinker;
 
     private static Player player;
     private static FFT fft;
+
+    private float background = 0;
 
     /**
      * The settings() method runs before the sketch has been set up, so other Processing functions cannot be used at
@@ -59,13 +64,16 @@ public class Equalizer extends PApplet {
             PVector orientation = new PVector(side * PConstants.HALF_PI, side);
             spectra.add(new Spectrum(this, position, radius, weight, color, fft.specSize(), orientation));
         }
+
+        Ani.init(this);
+        blinker = new Blinker(this);
     }
 
     /**
      * Draw method is responsible for displaying all objects.
      */
     public void draw() {
-        background(0);
+        background(background);
 
         fft.forward(player.getSong().mix);
         // Add a jitter variable from fft of the player to the objects
@@ -96,11 +104,15 @@ public class Equalizer extends PApplet {
         for (Spectrum s : spectra) {
             s.display();
         }
+
+        blinker.update(player.getSong().position());
+        blinker.display();
     }
 
     public void keyPressed() {
         if (key == 'P' || key == 'p') {
             player.TogglePlaying();
+            blinker.startAnimation();
         }
     }
 
