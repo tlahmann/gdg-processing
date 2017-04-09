@@ -1,0 +1,24 @@
+{
+"background": [
+  {"start": 16.677, "duration": 2.760, "value": 90, "easing": "sine_in"},
+  {"start": 19.522, "duration": 0.444, "value": 0, "easing": "sine_out"},
+  {"start": 20.400, "duration": 0.550, "value": 45, "easing": "sine_in"},
+  {"start": 20.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 21.400, "duration": 0.550, "value": 40, "easing": "sine_in"},
+  {"start": 21.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 22.400, "duration": 0.550, "value": 35, "easing": "sine_in"},
+  {"start": 22.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 23.400, "duration": 0.550, "value": 30, "easing": "sine_in"},
+  {"start": 23.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 24.400, "duration": 0.550, "value": 25, "easing": "sine_in"},
+  {"start": 24.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 25.400, "duration": 0.550, "value": 20, "easing": "sine_in"},
+  {"start": 25.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 26.400, "duration": 0.550, "value": 15, "easing": "sine_in"},
+  {"start": 26.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 27.400, "duration": 0.550, "value": 10, "easing": "sine_in"},
+  {"start": 27.951, "duration": 0.300, "value": 0, "easing": "sine_out"},
+  {"start": 28.400, "duration": 0.550, "value": 5, "easing": "sine_in"},
+  {"start": 28.951, "duration": 0.300, "value": 0, "easing": "sine_out"}
+]
+}

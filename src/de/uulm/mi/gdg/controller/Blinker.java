@@ -2,8 +2,11 @@ package de.uulm.mi.gdg.controller;
 
 import de.looksgood.ani.Ani;
 import de.looksgood.ani.AniConstants;
+import de.looksgood.ani.easing.Easing;
 import de.uulm.mi.gdg.objects.Entity;
 import processing.core.PApplet;
+import processing.data.JSONArray;
+import processing.data.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,10 +30,7 @@ public class Blinker implements Entity {
      * Initializes the animations into the anis-list to get a whole new start even if the song restarts.
      */
     public void startAnimation() {
-        anis = new ArrayList<>();
-
-        anis.add(new CustomAnimation(16.677f, 2.760f, "background", 90, AniConstants.CUBIC_IN));
-        anis.add(new CustomAnimation(19.522f, 0.444f, "background", 0, AniConstants.CUBIC_OUT));
+        anis = AniImporter.importAnimation(aniObject, "./data/timing/timing.json", "background");
     }
 
     /**
