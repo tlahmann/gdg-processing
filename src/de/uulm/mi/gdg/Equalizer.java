@@ -4,6 +4,7 @@ import ddf.minim.analysis.FFT;
 import de.looksgood.ani.Ani;
 import de.uulm.mi.gdg.controller.Blinker;
 import de.uulm.mi.gdg.controller.Player;
+import de.uulm.mi.gdg.controller.Spawner;
 import de.uulm.mi.gdg.objects.Circle;
 import de.uulm.mi.gdg.objects.Spectrum;
 import processing.core.PApplet;
@@ -22,6 +23,7 @@ public class Equalizer extends PApplet {
     private ArrayList<Circle> circles;
     private ArrayList<Spectrum> spectra;
     private Blinker blinker;
+    public static Spawner particleSystem;
 
     private static Player player;
     private static FFT fft;
@@ -65,8 +67,11 @@ public class Equalizer extends PApplet {
             spectra.add(new Spectrum(this, position, radius, weight, color, fft.specSize(), orientation));
         }
 
+        // Block of Elements that rely on animation.
         Ani.init(this);
         blinker = new Blinker(this);
+
+        particleSystem = new Spawner(this);
     }
 
     /**
@@ -107,12 +112,16 @@ public class Equalizer extends PApplet {
 
         blinker.update(player.getSong().position());
         blinker.display();
+
+        particleSystem.update(player.getSong().position());
+        particleSystem.display();
     }
 
     public void keyPressed() {
         if (key == 'P' || key == 'p') {
             player.TogglePlaying();
             blinker.startAnimation();
+            particleSystem.startAnimation();
         }
     }
 
