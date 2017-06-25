@@ -1,12 +1,8 @@
 package de.uulm.mi.gdg.controller;
 
 import de.looksgood.ani.Ani;
-import de.looksgood.ani.AniConstants;
-import de.looksgood.ani.easing.Easing;
 import de.uulm.mi.gdg.objects.Entity;
 import processing.core.PApplet;
-import processing.data.JSONArray;
-import processing.data.JSONObject;
 
 import java.util.ArrayList;
 
